@@ -10,7 +10,7 @@
 
 (require '[adzerk.bootlaces :refer :all])
 
-(def +version+ "0.0.1")
+(def +version+ "0.0.2")
 
 (task-options!
  pom {:project 'couchemar.simple-ring-proxy

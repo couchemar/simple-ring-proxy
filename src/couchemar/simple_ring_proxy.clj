@@ -1,6 +1,6 @@
 (ns couchemar.simple-ring-proxy
-  (:require [clojure.string :refer [replace]]
-            [clj-http.client]
+  (:require clojure.string
+            clj-http.client
             [ring.middleware.cookies :refer [wrap-cookies]]))
 
 (defn- prepare-request
@@ -9,7 +9,6 @@
    :url (str uri "?" (:query-string request))
    :headers (dissoc (:headers request) "host" "content-length")
    :body (:body request)
-   :follow-redirects true
    :throw-exceptions false
    :as :stream})
 
@@ -37,7 +36,7 @@
    (fn [request]
 
      (if (re-matches req-path-re (:uri request))
-       (-> (replace (:uri request) req-path-re proxy-replace-re)
+       (-> (clojure.string/replace (:uri request) req-path-re proxy-replace-re)
            (prepare-request request)
            (merge http-opts)
            clj-http.client/request
